@@ -439,3 +439,30 @@ footer {
 .article-footer a:hover {
     color: var(--text);
 }
+
+.article-cover {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .article-cover img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  .article-cover figcaption {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 8px;
+  }
+  
+  .article-cover a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  
+  .article-cover a:hover {
+    text-decoration: underline;
+  }

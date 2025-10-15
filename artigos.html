@@ -303,6 +303,29 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
         }
+
+        .read-more {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+                color: var(--text);
+        }
+
+        .read-more::after {
+                content: '→';
+                margin-left: 5px;
+                transition: transform 0.3s ease;
+        }
+
+        .read-more:hover::after {
+                transform: translateX(5px);
+        }
         
         /* Footer */
         footer {
@@ -458,7 +481,7 @@
             <div class="card-grid">
                 <!-- Artigo 1 -->
                 <div class="article-card">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Cyberpunk Future">
+                    <img src="assets/imagens/revolucao-vr.jpg" alt="Cyberpunk Future">
                     <div class="article-content">
                         <span class="article-category">Análise</span>
                         <div class="article-date">15 de Maio, 2023</div>
@@ -470,12 +493,13 @@
                 
                 <!-- Artigo 2 -->
                 <div class="article-card">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Tecnologia">
+                    <img src="assets/imagens/processadores-futuristas.jpg" alt="Tecnologia">
                     <div class="article-content">
                         <span class="article-category">Tecnologia</span>
                         <div class="article-date">10 de Maio, 2023</div>
                         <h3 class="article-title">Processadores Futuristas: O que Esperar nos Próximos 5 Anos</h3>
                         <p class="article-excerpt">Aprenda sobre as inovações que estão por vir nos chips de computação, prometendo velocidades sem precedentes e eficiência energética revolucionária para seus equipamentos.</p>
+                        <a href="artigos/processadores-futuristas/" class="read-more">Leia mais</a>
                     </div>
                 </div>
                 
