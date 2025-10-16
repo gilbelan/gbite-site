@@ -1,62 +1,65 @@
 #!/bin/bash
-# 🚀 Deploy Gbite - Source → Public (com cores e emojis)
 
-# ====== CONFIGURAÇÕES ======
-COMMIT_MSG=${1:-"Deploy automático - atualização do site"}
-PUBLIC_REPO="../gbite-site-public"
-
-# ====== CORES ======
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-YELLOW="\033[1;33m"
-BLUE="\033[0;34m"
-NC="\033[0m" # sem cor
-
-# ====== FUNÇÕES ======
-function info() { echo -e "${BLUE}ℹ️  $1${NC}"; }
-function success() { echo -e "${GREEN}✅ $1${NC}"; }
-function warn() { echo -e "${YELLOW}⚠️  $1${NC}"; }
-function error() { echo -e "${RED}❌ $1${NC}"; exit 1; }
-
-# ====== CHECAGEM ======
-echo -e "\n${BLUE}🚀 Iniciando deploy do Gbite...${NC}"
+echo "🚀 Iniciando deploy do Gbite..."
 echo "-------------------------------------------"
 
-if [ ! -d "$PUBLIC_REPO" ]; then
-  error "Pasta '$PUBLIC_REPO' não encontrada!
-  Coloque o repositório público (gbite-site-public) no mesmo nível do gbite-site-source."
+SOURCE_DIR="../gbite-site-source"
+PUBLIC_DIR="../gbite-site-public"
+
+# 🧭 Verifica se o script está dentro de uma das pastas
+if [ ! -d "$SOURCE_DIR" ] && [ ! -d "$PUBLIC_DIR" ]; then
+  echo "❌ Estrutura de diretórios não encontrada. Verifique se está em GBITE/gbite-site-source."
+  exit 1
 fi
 
-# ====== SINCRONIZAÇÃO ======
-info "Sincronizando arquivos entre source e public..."
+# Corrige caminhos relativos se estiver dentro do source
+if [ -d "../gbite-site-public" ]; then
+  SOURCE_DIR="."
+  PUBLIC_DIR="../gbite-site-public"
+fi
+
+echo "ℹ️  Sincronizando arquivos entre source e public..."
 rsync -av --delete \
-  --exclude='.git' \
-  --exclude='.github' \
-  --exclude='README.md' \
-  --exclude='deploy.sh' \
-  "$PWD/" "$PUBLIC_REPO/" || error "Falha ao sincronizar arquivos!"
+  --exclude=".git" \
+  --exclude="deploy.sh" \
+  --exclude="README.md" \
+  --exclude="LICENSE" \
+  --exclude=".gitignore" \
+  --exclude="node_modules" \
+  "$SOURCE_DIR/" "$PUBLIC_DIR/"
 
-success "Arquivos sincronizados com sucesso!"
+if [ $? -ne 0 ]; then
+  echo "❌ Falha ao sincronizar arquivos!"
+  exit 1
+fi
+echo "✅ Arquivos sincronizados com sucesso!"
 
-# ====== COMMIT & PUSH ======
-cd "$PUBLIC_REPO" || error "Falha ao acessar $PUBLIC_REPO"
+cd "$PUBLIC_DIR"
 
-info "Adicionando mudanças ao Git..."
+echo "ℹ️  Adicionando mudanças ao Git..."
 git add .
 
-# Verifica se há mudanças
-if git diff-index --quiet HEAD --; then
-  warn "Nenhuma modificação detectada. Nada para enviar."
-  exit 0
+if [ $? -ne 0 ]; then
+  echo "❌ Falha ao adicionar mudanças ao Git!"
+  exit 1
 fi
 
-info "Criando commit..."
-git commit -m "$COMMIT_MSG" || error "Falha ao criar commit!"
+# Cria o commit com a mensagem recebida como argumento
+COMMIT_MSG="${1:-Atualização automática via deploy.sh}"
+echo "ℹ️  Criando commit..."
+git commit -m "$COMMIT_MSG"
 
-info "Enviando para o repositório remoto..."
-git push origin main || error "Falha ao enviar alterações para o repositório remoto!"
+if [ $? -ne 0 ]; then
+  echo "❌ Falha ao criar commit!"
+  exit 1
+fi
 
-# ====== FINAL ======
-echo "-------------------------------------------"
-success "🌐 Deploy concluído com sucesso! O site do Gbite está atualizado 🚀"
-echo -e "${YELLOW}✨ Dica:${NC} use './deploy.sh \"mensagem\"' para personalizar o commit.\n"
+echo "ℹ️  Enviando para o repositório remoto..."
+git push origin main
+
+if [ $? -ne 0 ]; then
+  echo "❌ Falha ao enviar alterações para o repositório remoto!"
+  exit 1
+fi
+
+echo "✅ Deploy concluído com sucesso! 🎉"
