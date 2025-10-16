@@ -357,3 +357,26 @@ footer {
         font-size: 1.8rem;
     }
 }
+
+.read-more {
+    display: inline-block;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.read-more:hover {
+        color: var(--text);
+}
+
+.read-more::after {
+        content: '→';
+        margin-left: 5px;
+        transition: transform 0.3s ease;
+}
+
+.read-more:hover::after {
+        transform: translateX(5px);
+}
