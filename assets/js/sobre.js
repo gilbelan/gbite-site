@@ -107,6 +107,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Função para alternar o menu
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
+
 // Animação de entrada dos cards
 const observerOptions = {
     threshold: 0.1,

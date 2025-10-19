@@ -103,6 +103,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Função para alternar o menu
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
+
 // Efeito de Menu Ativo ao Scrollar
 window.addEventListener('scroll', function() {
     const sections = document.querySelectorAll('section');

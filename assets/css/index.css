@@ -347,3 +347,47 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* ====== Estilos do menu ====== */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+  
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #fff; /* cor do ícone */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  /* ====== Responsividade ====== */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+  
+    .nav-links {
+      position: absolute;
+      top: 70px;
+      right: 0;
+      background-color: #111;
+      flex-direction: column;
+      width: 200px;
+      display: none;
+      text-align: right;
+      padding: 20px;
+      border-radius: 0 0 0 10px;
+    }
+  
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .nav-links li {
+      margin: 10px 0;
+    }
+  }

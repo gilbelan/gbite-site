@@ -110,6 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Função para alternar o menu
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
 // Efeito de Scroll suave
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
